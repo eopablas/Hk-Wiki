@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <link rel="shortcut icon" href="img/hk.ico" />
+    <title>Login - Hollow Knight Wiki</title>
+</head>
+<body id="pagina-login">
+
+    <a href="index.html" class="btn-voltar">
+        &larr; Voltar para a Wiki
+    </a>
+
+    <div class="container-formularios">
+        <div id="registro" class="form-wrapper">
+            <div class="form-box">
+                <h1>Criar Conta</h1>
+                <form>
+                    <div class="input-group">
+                        <input type="text" id="usuario" required>
+                        <label for="usuario">Nome de Usuário</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="email" required>
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="senha-reg" required>
+                        <label for="senha-reg">Senha</label>
+                    </div>
+                    <button type="submit" class="btn-form">Registrar</button>
+                </form>
+                <div class="link-troca">
+                    <p>Já tem uma conta? <a href="#login">Entrar</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="login" class="form-wrapper">
+            <div class="form-box">
+                <h1>Entrar</h1>
+                <form>
+                    <div class="input-group">
+                        <input type="text" id="usuario-login" required>
+                        <label for="usuario-login">Nome de Usuário</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="senha-login" required>
+                        <label for="senha-login">Senha</label>
+                    </div>
+                    <button type="submit" class="btn-form">Acessar</button>
+                </form>
+                <div class="link-troca">
+                    <p>Não tem uma conta? <a href="#registro">Criar uma</a></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html> 
