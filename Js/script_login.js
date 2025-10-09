@@ -1,65 +1,58 @@
-// Função para simular o Registro
-function handleRegistro(event) {
-    // 1. Evita o envio padrão do formulário (que recarrega a página)
-    event.preventDefault();
+// Seleciona formulários
+const registroForm = document.querySelector('#registro form');
+const loginForm = document.querySelector('#login form');
 
-    // 2. Opcional: Coletar dados (para um back-end real)
-    const usuario = document.getElementById('usuario').value;
-    const email = document.getElementById('email').value;
-    const senha = document.getElementById('senha-reg').value;
+// Função para salvar usuário
+function salvarUsuario(nome, email, senha) {
+    const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
 
-    console.log(`Tentativa de Registro: Usuário: ${usuario}, Email: ${email}`);
-
-    // 3. Simula a tela de "Cadastro Realizado"
-    const container = document.querySelector('.container-formularios');
-    
-    // Cria o novo conteúdo de sucesso
-    const sucessoHTML = `
-        <div class="form-box" style="text-align: center; animation: go-back 0.8s;">
-            <h1>Cadastro Realizado!</h1>
-            <p style="color: white; margin-bottom: 30px; font-size: 1.1rem;">
-                Sua conta foi criada com sucesso. Bem-vindo(a)!
-            </p>
-            <a href="index.html" class="btn-form" style="display: block; text-decoration: none;">
-                Voltar para a Wiki
-            </a>
-        </div>
-    `;
-
-    // Substitui o conteúdo do container
-    container.innerHTML = sucessoHTML;
-    
-    // Opcional: Oculta o botão de Voltar para a Wiki que fica no canto
-    document.querySelector('.btn-voltar').style.display = 'none';
-}
-
-// Função para simular o Login
-function handleLogin(event) {
-    // 1. Evita o envio padrão do formulário
-    event.preventDefault();
-
-    // 2. Opcional: Coletar dados
-    const usuarioLogin = document.getElementById('usuario-login').value;
-    const senhaLogin = document.getElementById('senha-login').value;
-
-    console.log(`Tentativa de Login: Usuário: ${usuarioLogin}`);
-
-    // 3. Redireciona para a tela principal (Volta à Wiki)
-    window.location.href = "index.html"; 
-    // Em um sistema real, você faria uma requisição ao servidor antes de redirecionar.
-}
-
-// Adiciona os event listeners aos formulários
-document.addEventListener('DOMContentLoaded', () => {
-    // Seleciona os formulários (pode ser o pai <form> ou o botão se for o único submit)
-    const formRegistro = document.querySelector('#registro form');
-    const formLogin = document.querySelector('#login form');
-
-    if (formRegistro) {
-        formRegistro.addEventListener('submit', handleRegistro);
+    // Verifica se já existe usuário
+    if (usuarios.some(u => u.nome === nome)) {
+        return false;
     }
 
-    if (formLogin) {
-        formLogin.addEventListener('submit', handleLogin);
+    usuarios.push({ nome, email, senha });
+    localStorage.setItem('usuarios', JSON.stringify(usuarios));
+    return true;
+}
+
+// Função para logar usuário
+function logarUsuario(nome, senha) {
+    const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+    const user = usuarios.find(u => u.nome === nome && u.senha === senha);
+    if (user) {
+        localStorage.setItem('usuarioLogado', user.nome);
+        return true;
+    }
+    return false;
+}
+
+// Evento de registro
+registroForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nome = document.getElementById('usuario').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const senha = document.getElementById('senha-reg').value.trim();
+
+    if (salvarUsuario(nome, email, senha)) {
+        alert('Conta criada com sucesso! Você já está logado.');
+        localStorage.setItem('usuarioLogado', nome);
+        window.location.href = 'index.html'; // Redireciona para a wiki
+    } else {
+        alert('Usuário já existe. Escolha outro nome.');
+    }
+});
+
+// Evento de login
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nome = document.getElementById('usuario-login').value.trim();
+    const senha = document.getElementById('senha-login').value.trim();
+
+    if (logarUsuario(nome, senha)) {
+        alert('Login efetuado com sucesso!');
+        window.location.href = 'index.html'; // Redireciona para a wiki
+    } else {
+        alert('Usuário ou senha incorretos!');
     }
 });
