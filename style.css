@@ -83,7 +83,8 @@ h1{
 }
 
 p{
-    text-shadow: 0 0 20px #000000;
+    font-size: 1.2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     width: 50%;
 }
 
@@ -389,3 +390,4 @@ p{
     background-color: rgba(60, 60, 60, 0.9);
     align-self: flex-start;
 }
+
